@@ -6,10 +6,16 @@ import os
 import re
 
 
-def moveTagsOutOfMetadata(folderAbsolutePath, filename):
+def move_tags_out_of_metadata(folder_absolute_path, filename):
+    """Move the tags out of the metadata since the links are not supported in metadata
+
+    Args:
+        folder_absolute_path (string): absolute path to the note folder
+        filename (string): note file name
+    """
     # Check if the notes has the tags in the metadata
     try:
-        with open(os.path.join(folderAbsolutePath, filename), 'r+') as f:
+        with open(os.path.join(folder_absolute_path, filename), 'r+') as f:
             file = f.read()
             file = re.sub(r"(Tags:.+)\n---", r"---\n\1", file)
             # Setting the position to the top
@@ -23,6 +29,6 @@ def moveTagsOutOfMetadata(folderAbsolutePath, filename):
         return
 
 
-for filename in os.listdir(r"C:\Users\quentin.rospars\Documents\Sync\Notes"):
-    moveTagsOutOfMetadata(
-        r"C:\Users\quentin.rospars\Documents\Sync\Notes", filename)
+notes_absolute_path = r"C:\Users\quentin.rospars\Documents\Sync\Notes"
+for filename in os.listdir(notes_absolute_path):
+    move_tags_out_of_metadata(notes_absolute_path, filename)
